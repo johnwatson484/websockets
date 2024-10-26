@@ -1,5 +1,6 @@
 import Inert from '@hapi/inert'
 import Crumb from '@hapi/crumb'
+import WebSocket from 'hapi-plugin-websocket'
 import logging from './logging.js'
 import errors from './errors.js'
 import views from './views.js'
@@ -10,6 +11,7 @@ async function registerPlugins (server) {
   const plugins = [
     Inert,
     Crumb,
+    WebSocket,
     logging,
     errors,
     views,

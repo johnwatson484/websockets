@@ -1,5 +1,23 @@
 {% extends '_layout.njk' %}
 
 {% block content %}
-  <h1>Hello world</h1>
+  <h1>Websockets</h1>
+  <p id="events"></p>
+
+  <script>
+    const events = document.getElementById('events');
+    const socket = new WebSocket('ws://localhost:3000/socket');
+
+    socket.onopen = () => {
+      console.log('Connection opened')
+    };
+
+    socket.onmessage = (event) => {
+      events.innerHTML += event.data;
+    }
+
+    socket.onclose = () => {
+      console.log('Connection closed')
+    }
+  </script>
 {% endblock %}

@@ -31,7 +31,7 @@ const config = convict({
   appName: {
     doc: 'The name of the application.',
     format: String,
-    default: 'Hapi Template',
+    default: 'Websockets',
     env: 'APP_NAME',
   },
 })

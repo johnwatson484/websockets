@@ -1,4 +1,4 @@
-# Hapi Template
+# Websockets
 Quick start new Node.js project using Hapi.js.
 
 ## Prerequisites

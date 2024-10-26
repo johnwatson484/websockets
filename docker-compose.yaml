@@ -1,5 +1,5 @@
 services:
-  hapi-template:
+  websockets:
     build: .
-    image: hapi-template
-    container_name: hapi-template
+    image: websockets
+    container_name: websockets
