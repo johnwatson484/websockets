@@ -5,15 +5,22 @@
   <p id="events"></p>
 
   <script>
+    let requests = 1
+
     const events = document.getElementById('events');
     const socket = new WebSocket('ws://localhost:3000/socket');
 
     socket.onopen = () => {
       console.log('Connection opened')
-    };
+      socket.send(JSON.stringify({data: 'Hello from the client'}))
+    }
 
     socket.onmessage = (event) => {
-      events.innerHTML += event.data;
+      events.innerHTML += event.data
+      if (requests <= 20) {
+        socket.send(JSON.stringify({data: `Hello again from the client with additional request ${requests}`}))
+        requests++
+      }
     }
 
     socket.onclose = () => {
