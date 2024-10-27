@@ -3,21 +3,19 @@ const route = {
   path: '/socket',
   config: {
     plugins: {
-      websocket: { only: true, autoping: 30 * 1000 },
+      websocket: { only: true, autoping: 5 * 1000 },
       crumb: false
     }
   },
   handler: (request, h) => {
-    const { ws, peers } = request.websocket()
+    const { peers } = request.websocket()
 
     console.log('Received data:', request.payload)
     console.log('Connected peers:', peers.length)
 
     peers.forEach(peer => {
-      peer.send(JSON.stringify({ message: request.payload.message }))
+      peer.send(JSON.stringify({ ...request.payload }))
     })
-
-    ws.send(JSON.stringify({ message: 'You sent a message' }))
 
     return ''
   }

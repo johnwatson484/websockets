@@ -5,6 +5,11 @@
 
   <p>What do you have to say?</p>
 
+  <label for="name">Name:</label>
+  <input type="text" id="name"/>
+  <br/>
+  <br/>
+  <label for="message">Message:</label>
   <input type="text" id="message"/>
   <button type="button" id="send" disabled>Send</button>
 
@@ -23,7 +28,9 @@
     }
 
     socket.onmessage = (event) => {
-      chat.innerHTML += `<p>Friend: ${JSON .parse(event.data).message}</p>`
+      const eventData = JSON.parse(event.data)
+      console.log(eventData)
+      chat.innerHTML += `<p>${eventData.name}: ${eventData.message}</p>`
     }
 
     socket.onclose = () => {
@@ -33,9 +40,9 @@
     document
       .getElementById('send')
       .addEventListener('click', () => {
+        const name = document.getElementById('name').value ?? 'Unknown'
         const message = messageInput.value ?? ''
-        socket.send(JSON.stringify({message}))
-        chat.innerHTML += `<p>You: ${message}</p>`
+        socket.send(JSON.stringify({ name, message }))
         messageInput.value = ''
       })
   </script>
