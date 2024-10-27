@@ -23,7 +23,7 @@
     }
 
     socket.onmessage = (event) => {
-      chat.innerHTML += `<p>Server: ${JSON .parse(event.data).message}</p>`
+      chat.innerHTML += `<p>Friend: ${JSON .parse(event.data).message}</p>`
     }
 
     socket.onclose = () => {
