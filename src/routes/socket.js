@@ -5,13 +5,13 @@ const route = {
   path: '/socket',
   config: {
     plugins: {
-      websocket: { only: true, autoping: 30 * 1000 },
+      websocket: { only: true, autoping: 120 * 1000 },
       crumb: false
     }
   },
   handler: (request, h) => {
     console.log('Received data:', request.payload)
-    return { data: crypto.randomUUID() }
+    return { message: crypto.randomUUID() }
   }
 }
 

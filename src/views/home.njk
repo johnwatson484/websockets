@@ -2,29 +2,41 @@
 
 {% block content %}
   <h1>Websockets</h1>
-  <p id="events"></p>
+
+  <p>What do you have to say?</p>
+
+  <input type="text" id="message"/>
+  <button type="button" id="send" disabled>Send</button>
+
+  <div id="chat"></div>
 
   <script>
-    let requests = 1
+    const events = document.getElementById('events')
+    const socket = new WebSocket('ws://localhost:3000/socket')
 
-    const events = document.getElementById('events');
-    const socket = new WebSocket('ws://localhost:3000/socket');
+    const messageInput = document.getElementById('message')
+    const sendButton = document.getElementById('send')
 
     socket.onopen = () => {
       console.log('Connection opened')
-      socket.send(JSON.stringify({data: 'Hello from the client'}))
+      sendButton.disabled = false
     }
 
     socket.onmessage = (event) => {
-      events.innerHTML += event.data
-      if (requests <= 20) {
-        socket.send(JSON.stringify({data: `Hello again from the client with additional request ${requests}`}))
-        requests++
-      }
+      chat.innerHTML += `<p>Server: ${JSON .parse(event.data).message}</p>`
     }
 
     socket.onclose = () => {
       console.log('Connection closed')
     }
+
+    document
+      .getElementById('send')
+      .addEventListener('click', () => {
+        const message = messageInput.value ?? ''
+        socket.send(JSON.stringify({message}))
+        chat.innerHTML += `<p>You: ${message}</p>`
+        messageInput.value = ''
+      })
   </script>
 {% endblock %}
